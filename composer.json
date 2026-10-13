@@ -1,0 +1,53 @@
+{
+    "name": "givanov95/laravel-shipping",
+    "description": "The delivery contract between a Laravel shop and its delivery methods: one interface for a courier, a flat rate or a pickup point",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["laravel", "shipping", "delivery", "courier", "ecommerce"],
+    "authors": [
+        {
+            "name": "Georgi Ivanov",
+            "email": "joroz95@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "brick/money": "^0.15",
+        "illuminate/contracts": "^12.0 || ^13.0",
+        "illuminate/support": "^12.0 || ^13.0"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.64",
+        "givanov95/laravel-git-hooks": "^1.1",
+        "orchestra/testbench": "^10.0 || ^11.0",
+        "phpunit/phpunit": "^11.5 || ^12.0 || ^13.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Givanov95\\Shipping\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Givanov95\\Shipping\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Givanov95\\Shipping\\ShippingServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "lint": "php-cs-fixer fix --dry-run --diff"
+    },
+    "config": {
+        "allow-plugins": {
+            "givanov95/laravel-git-hooks": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
