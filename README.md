@@ -59,6 +59,22 @@ final class PickupFromShop implements DeliveryMethod
 
 - **`PlaceDirectory`** — for a method that delivers to places it knows by id. `places($search)`, `points($placeId, $type)` and `streets($placeId, $search)` return `Place`, `Point` and `Street` objects for the checkout form. A courier that is down gives an empty list, not an exception.
 - **`DeliveryCountries`** — for a method that says where it delivers. `countries($currency)` lists the countries for a parcel in that currency (none: the method is not offered), and `freeDeliveryApplies($destination)` says whether the free delivery threshold of the shop holds there. A method without it delivers in the country of the shop.
+- **`CreatesWaybills`** — for a method that hands the parcel to a courier. `createWaybill($destination, $shipment)` creates the waybill of a packed order and returns a `Waybill`. When the courier refuses the shipment or does not answer it throws `Exceptions\WaybillNotCreated`, with a message for the person who asked. A method without it is delivered by the shop, or handed to the courier by hand.
+
+### Waybills
+
+`Parcel` is what is known in the cart, before anything is packed: the currency, to name a price. A `Shipment` is what is known once the order is packed, and what the courier needs to take it:
+
+| Field | |
+| --- | --- |
+| `reference` | The number of the order, printed on the waybill. |
+| `recipientName`, `recipientPhone`, `recipientEmail` | Who receives it; the email may be null. |
+| `weight` | The total weight in kilograms, above zero. |
+| `packages` | How many packages, at least one. |
+| `contents` | What is inside. |
+| `cashOnDelivery` | A `Money` the courier collects from the recipient, in its currency, or null. |
+
+The destination is the `Destination` the method built at checkout, as the shop stored it, so whatever the method put in `courierData` comes back to it. The `Waybill` carries the `number` and, when the courier gives them, a `trackingUrl` for the recipient, a `labelUrl` to print for the shop and the `price` the courier charges.
 
 ## Registering a method
 
